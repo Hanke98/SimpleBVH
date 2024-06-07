@@ -103,6 +103,11 @@ void BVH::init(const std::vector<std::array<Eigen::Vector3d, 2>>& cornerlist)
 {
     n_corners = cornerlist.size();
 
+    init_box_list.reserve(n_corners);
+    init_box_list.clear();
+    init_box_list.insert(
+        init_box_list.end(), cornerlist.begin(), cornerlist.end());
+
     Eigen::MatrixXd box_centers(n_corners, 3);
     for (int i = 0; i < n_corners; ++i) {
         box_centers.row(i) = (cornerlist[i][0] + cornerlist[i][1]) / 2;

@@ -67,6 +67,11 @@ public:
         intersect_3D_box(bbd0_3D, bbd1_3D, list);
     }
 
+    const std::vector<std::array<Eigen::Vector3d, 2>>& get_init_boxlist() const
+    {
+        return init_box_list;
+    }
+
 private:
     void init_boxes_recursive(
         const std::vector<std::array<Eigen::Vector3d, 2>>& cornerlist,
@@ -92,5 +97,6 @@ private:
     std::vector<std::array<Eigen::Vector3d, 2>> boxlist;
     std::vector<int> new2old;
     size_t n_corners = -1;
+    std::vector<std::array<Eigen::Vector3d, 2>> init_box_list;
 };
 } // namespace SimpleBVH
