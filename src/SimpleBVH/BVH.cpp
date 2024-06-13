@@ -124,44 +124,46 @@ void BVH::init(const std::vector<std::array<Eigen::Vector3d, 2>>& cornerlist)
         box_centers /= scale;
     }
 
-    struct sortstruct {
-        int order;
-        Resorting::MortonCode64 morton;
-    };
-    std::vector<sortstruct> list;
-    const int multi = 1000;
-    list.resize(n_corners);
+    // struct sortstruct {
+    //     int order;
+    //     Resorting::MortonCode64 morton;
+    // };
+    // std::vector<sortstruct> list;
+    // const int multi = 1000;
+    // list.resize(n_corners);
+    //
+    // for (int i = 0; i < n_corners; i++) {
+    //     const Eigen::MatrixXd tmp = box_centers.row(i) * multi;
+    //
+    //     list[i].morton =
+    //         Resorting::MortonCode64(int(tmp(0)), int(tmp(1)), int(tmp(2)));
+    //     list[i].order = i;
+    // }
+    //
+    // const auto morton_compare = [](const sortstruct& a, const sortstruct& b)
+    // {
+    //     return (a.morton < b.morton);
+    // };
+    // std::sort(list.begin(), list.end(), morton_compare);
+    //
+    // new2old.resize(n_corners);
+    // for (int i = 0; i < n_corners; i++) {
+    //     new2old[i] = list[i].order;
+    // }
 
-    for (int i = 0; i < n_corners; i++) {
-        const Eigen::MatrixXd tmp = box_centers.row(i) * multi;
+    // std::vector<std::array<Eigen::Vector3d, 2>> sorted_cornerlist(n_corners);
 
-        list[i].morton =
-            Resorting::MortonCode64(int(tmp(0)), int(tmp(1)), int(tmp(2)));
-        list[i].order = i;
-    }
-
-    const auto morton_compare = [](const sortstruct& a, const sortstruct& b) {
-        return (a.morton < b.morton);
-    };
-    std::sort(list.begin(), list.end(), morton_compare);
-
-    new2old.resize(n_corners);
-    for (int i = 0; i < n_corners; i++) {
-        new2old[i] = list[i].order;
-    }
-
-    std::vector<std::array<Eigen::Vector3d, 2>> sorted_cornerlist(n_corners);
-
-    for (int i = 0; i < n_corners; i++) {
-        sorted_cornerlist[i] = cornerlist[list[i].order];
-    }
+    // for (int i = 0; i < n_corners; i++) {
+    //     sorted_cornerlist[i] = cornerlist[list[i].order];
+    // }
 
     boxlist.resize(
         max_node_index(1, 0, n_corners)
         + 1 // <-- this is because size == max_index + 1 !!!
     );
 
-    init_boxes_recursive(sorted_cornerlist, 1, 0, n_corners);
+    // init_boxes_recursive(sorted_cornerlist, 1, 0, n_corners);
+    init_boxes_recursive(cornerlist, 1, 0, n_corners);
 }
 
 void BVH::init(

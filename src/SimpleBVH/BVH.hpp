@@ -36,7 +36,8 @@ public:
 
         list.resize(tmp.size());
         for (int i = 0; i < tmp.size(); ++i)
-            list[i] = new2old[tmp[i]];
+            // list[i] = new2old[tmp[i]];
+            list[i] = tmp[i];
     }
 
     void intersect_2D_box(
