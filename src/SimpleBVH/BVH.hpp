@@ -21,7 +21,7 @@ public:
     void clear()
     {
         boxlist.clear();
-        new2old.clear();
+        // new2old.clear();
         n_corners = -1;
     }
 
@@ -36,7 +36,8 @@ public:
 
         list.resize(tmp.size());
         for (int i = 0; i < tmp.size(); ++i)
-            list[i] = new2old[tmp[i]];
+            // list[i] = new2old[tmp[i]];
+            list[i] = tmp[i];
     }
 
     void intersect_2D_box(
@@ -65,6 +66,15 @@ public:
         bbd1_3D.head(bbd1.size()) = bbd1.head(bbd1.size());
 
         intersect_3D_box(bbd0_3D, bbd1_3D, list);
+    }
+
+    std::array<Eigen::Vector3d, 2> get_box(int i)
+    {
+        std::array<Eigen::Vector3d, 2> _box = boxlist[i];
+        // printf("boxlist(%d)[0]: %f, %f, %f, [1]: %f, %f, %f\n",
+        //     i, boxlist[i][0][0], boxlist[i][0][1], boxlist[i][0][2],
+        //     boxlist[i][1][0], boxlist[i][1][1], boxlist[i][1][2]);
+        return _box;
     }
 
 private:
